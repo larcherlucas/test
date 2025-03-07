@@ -1,0 +1,130 @@
+$primary-color: #4CAF50;
+$primary-hover: #45a049;
+$text-color: #555;
+$border-color: #ddd;
+$background-light: #f9f9f9;
+$javascript-hover-shadow: rgba(255, 215, 0, 0.5);
+$html-color: #e34c26;
+$css-color: #264de4;
+$vue-color: #42b883;
+$age-color: blue;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin card-style {
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Icon styles
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+// Technology text styles
+.js-text {
+  cursor: pointer;
+  @include transition;
+  
+  &:hover {
+    text-shadow: 0 0 5px $javascript-hover-shadow;
+  }
+}
+
+.html-text {
+  color: $html-color;
+}
+
+.css-text {
+  @include transition;
+}
+
+.vuejs-text {
+  color: $vue-color;
+  font-weight: bold;
+}
+
+// Age display
+.age {
+  color: $age-color;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+// Button styles
+.button-container {
+  @include flex-center;
+  margin-top: 15px;
+}
+
+.action-button {
+  background-color: $primary-color;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  @include transition(background-color);
+  
+  &:hover {
+    background-color: $primary-hover;
+  }
+}
+
+// User info card
+.user-info {
+  margin: 15px auto;
+  @include card-style;
+  background-color: $background-light;
+  max-width: 300px;
+  text-align: center;
+  
+  .user-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .user-email {
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: $text-color;
+    word-break: break-all;
+  }
+  
+  .user-image-container {
+    @include flex-center;
+    margin: 15px 0 5px;
+    
+    .user-image {
+      border-radius: 50%;
+      border: 3px solid $border-color;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      @include transition(transform);
+      
+      &:hover {
+        transform: scale(1.05);
+        border-color: $primary-color;
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import NumOneIcon from './icons/IconOne.vue'
 import NumTwoIcon from './icons/IconTwo.vue'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
+import '@/styles/styles.scss'
 const userName = ref('')
 let activeColor = ref('green')
 const vueJsText = ref('VueJS')
@@ -128,97 +129,3 @@ const ageOfRegistered = '';
 
 </template>
 
-<style scoped>
-.icon{
-  width: 24px;
-  height: 24px;
-}
-.age{
-  color: blue;
-}
-.js-text {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.html-text {
-  color: red;
-}
-
-.css-text {
-  transition: all 0.5s ease;
-}
-
-.vuejs-text {
-  color: green;
-  font-weight: bold;
-}
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.action-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.action-button:hover {
-  background-color: #45a049;
-}
-
-.user-info {
-  margin: 15px auto;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  max-width: 300px;
-  text-align: center;
-}
-
-.user-name {
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.user-email {
-  margin: 10px 0;
-  font-size: 0.9em;
-  color: #555;
-  word-break: break-all;
-}
-
-.user-image-container {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0 5px;
-}
-
-.user-image {
-  border-radius: 50%;
-  border: 3px solid #ddd;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.user-image:hover {
-  transform: scale(1.05);
-  border-color: #4CAF50;
-}
-</style>
