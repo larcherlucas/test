@@ -10,6 +10,8 @@ let activeColor = ref('green')
 const vueJsText = ref('VueJS')
 const cssText = ref('CSS')
 const isJsHovered = ref(false)
+const userEmail = ref('');
+const userImage = ref('');
 function updateCssText() {
   let index = 0
   const cssVariations = ['SCSS', 'tailwind', 'bootstrap', 'CSS']
@@ -25,14 +27,27 @@ onMounted(() => {
 function getUser() {
   axios.get('https://randomuser.me/api/')
   .then(function (response) {
-    const name = response.data.results[1].name;
-    userName.value = name.title + ' ' + 
-                     name.first + ' ' + 
-                     name.last;
+    const user = response.data.results[0];
+    if (user) {
+      userName.value = user.name.title + ' ' + 
+                       user.name.first + ' ' + 
+                       user.name.last;
+      
+      userEmail.value = user.email;
+      
+      userImage.value = user.picture.medium;
+      
+      activeColor.value = 'red';
+    } else {
+      throw new Error('Aucun utilisateur trouvé');
+    }
   })
   .catch(function (error) {
     activeColor = ref('red')
     userName.value = error
+    userName.value = error.toString();
+    userEmail.value = '';
+    userImage.value = '';
   })
 }
 
@@ -89,7 +104,13 @@ const ageOfRegistered = '';
     En bonus, vous devrez afficher l'email et l'image au format vignette de la personne.<br/>
     <button variant="primary" v-on:click="getUser">Obtenir un nom</button>
     <br/>
-    <p :style="{color: activeColor}"> {{ userName }} </p>
+    <div v-if="userName" class="user-info">
+      <p :style="{color: activeColor}">{{ userName }}</p>
+      <p v-if="userEmail" class="user-email">Email: {{ userEmail }}</p>
+      <div v-if="userImage" class="user-image-container">
+        <img :src="userImage" alt="Photo de profil" class="user-image">
+      </div>
+    </div>
   </EvaluationItem>
 
   <EvaluationItem>
