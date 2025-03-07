@@ -4,10 +4,24 @@ import DocumentationIcon from './icons/IconDocumentation.vue'
 import NumOneIcon from './icons/IconOne.vue'
 import NumTwoIcon from './icons/IconTwo.vue'
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 const userName = ref('')
 let activeColor = ref('green')
-
+const vueJsText = ref('VueJS')
+const cssText = ref('CSS')
+const isJsHovered = ref(false)
+function updateCssText() {
+  let index = 0
+  const cssVariations = ['SCSS', 'tailwind', 'bootstrap', 'CSS']
+  
+  setInterval(() => {
+    cssText.value = cssVariations[index]
+    index = (index + 1) % cssVariations.length
+  }, 3000)
+}
+onMounted(() => {
+  updateCssText()
+})
 function getUser() {
   axios.get('https://randomuser.me/api/')
   .then(function (response) {
@@ -33,7 +47,23 @@ const ageOfRegistered = '';
     </template>
     <template #heading>Présentation</template>
 
-    Vous trouverez ci-dessous une liste de tâches de difficultés croissantes, afin d'évaluer votre maitrise de : <u>Javascript, HTML, CSS et VueJS</u>.<br/>
+    Vous trouverez ci-dessous une liste de tâches de difficultés croissantes, afin d'évaluer votre maitrise de : 
+    <u>
+      <span 
+        class="js-text" 
+        @mouseenter="isJsHovered = true" 
+        @mouseleave="isJsHovered = false"
+      >{{ isJsHovered ? 'JS' : 'Javascript' }}</span>, 
+      
+      <span class="html-text">HTML</span>, 
+      
+      <span class="css-text">{{ cssText }}</span> 
+      
+      et 
+      
+      <span class="vuejs-text">{{ vueJsText }}</span>
+    </u>.
+    <br/>
     <br/>    
 
   </EvaluationItem>
@@ -84,5 +114,22 @@ const ageOfRegistered = '';
 }
 .age{
   color: blue;
+}
+.js-text {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.html-text {
+  color: red;
+}
+
+.css-text {
+  transition: all 0.5s ease;
+}
+
+.vuejs-text {
+  color: green;
+  font-weight: bold;
 }
 </style>
