@@ -3,8 +3,9 @@ import EvaluationItem from './EvaluationItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import NumOneIcon from './icons/IconOne.vue'
 import NumTwoIcon from './icons/IconTwo.vue'
+import NumThreeIcon from './icons/IconThree.vue'
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import '@/styles/styles.scss'
 const userName = ref('')
 let activeColor = ref('green')
@@ -13,6 +14,8 @@ const cssText = ref('CSS')
 const isJsHovered = ref(false)
 const userEmail = ref('');
 const userImage = ref('');
+const userAge = ref(0)
+const userRegisteredDate = ref('')
 function updateCssText() {
   let index = 0
   const cssVariations = ['SCSS', 'tailwind', 'bootstrap', 'CSS']
@@ -35,9 +38,9 @@ function getUser() {
                        user.name.last;
       
       userEmail.value = user.email;
-      
       userImage.value = user.picture.medium;
-      
+      userAge.value = user.dob.age;
+      userRegisteredDate.value = user.registered.date;
       activeColor.value = 'red';
     } else {
       throw new Error('Aucun utilisateur trouvé');
@@ -49,11 +52,24 @@ function getUser() {
     userName.value = error.toString();
     userEmail.value = '';
     userImage.value = '';
+    userAge.value = 0;
+    userRegisteredDate.value = '';
   })
 }
 
-const ageOfRegistered = '';
-
+const ageOfRegistered = computed(() => {
+  if (!userAge.value || !userRegisteredDate.value) return ''
+  
+  const registeredDate = new Date(userRegisteredDate.value)
+  const registeredYear = registeredDate.getFullYear()
+  
+  const currentDate = new Date()
+  const birthYear = currentDate.getFullYear() - userAge.value
+  
+  const ageAtRegistration = registeredYear - birthYear
+  
+  return ageAtRegistration >= 0 ? ageAtRegistration : ''
+})
 </script>
 
 <template>
@@ -98,7 +114,7 @@ const ageOfRegistered = '';
 
   <EvaluationItem>
     <template #icon>
-      <NumTwoIcon class="icon"/>
+      <NumThreeIcon class="icon"/>
     </template>
     <template #heading>Débogage Javascript</template>
     Ici, il y a un bogue qui empêche d'afficher le nom d'une personne. Vous devez comprendre le résultat de la requête et corriger ce bogue. <br/>
